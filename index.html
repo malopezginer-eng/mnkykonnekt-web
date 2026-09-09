@@ -9,7 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.pexels.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage%20Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage%20Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage%20Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage%20Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400..700&display=swap"></noscript>
+
 <style>
 :root {
   --ink: #14161A; --paper: #F6F4EF; --tint: #ECE8DF; --brand: #0B6E4F; --accent: #F2B134; --on-brand: #ffffff;
@@ -143,7 +146,7 @@ section { padding: clamp(64px, 9vw, 120px) 0; }
 /* ---------- barra de credibilidad ---------- */
 .cred { background: var(--tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; }
 .cred ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.cred li { padding: 22px clamp(20px, 3vw, 40px); font-size: 15px; font-weight: 600; color: var(--muted); border-left: 1px solid var(--line); }
+.cred li { padding: 22px clamp(20px, 3vw, 40px); font-size: 15px; font-weight: 500; color: color-mix(in srgb, var(--ink) 82%, var(--paper)); border-left: 1px solid var(--line); }
 .cred li:first-child { border-left: 0; }
 .cred li b { display: block; color: var(--ink); font-family: var(--display); font-weight: var(--display-weight); font-size: 28px; line-height: 1.1; margin-bottom: 4px; }
 .cred li b.small { font-size: 19px; }
