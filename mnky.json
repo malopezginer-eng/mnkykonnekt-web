@@ -39,10 +39,10 @@
   "showcase_title": "Recent drafts",
   "showcase_lead": "Draft pages built for real Singapore businesses from public information and stock photos. Each one is a design proposal, not a client's live site.",
   "showcase": [
-    {"title": "The Parlour", "family": "Hair salon · Kovan", "href": "https://malopezginer-eng.github.io/prospeccion-previews/p/the-parlour/", "img": "img/showcase-the-parlour.jpg", "alt": "Draft website for The Parlour, a hair salon in Kovan"},
-    {"title": "Grease Monkey Barber Garage", "family": "Barbershop · Rochor", "href": "https://malopezginer-eng.github.io/prospeccion-previews/p/grease-monkey-barber-garage/", "img": "img/showcase-grease-monkey-barber-garage.jpg", "alt": "Draft website for Grease Monkey Barber Garage"},
-    {"title": "Tai Dental Surgery", "family": "Dental clinic · Ang Mo Kio", "href": "https://malopezginer-eng.github.io/prospeccion-previews/p/tai-dental-surgery-pte-ltd/", "img": "img/showcase-tai-dental-surgery-pte-ltd.jpg", "alt": "Draft website for Tai Dental Surgery"},
-    {"title": "Fleurs Actually", "family": "Florist · Bishan", "href": "https://malopezginer-eng.github.io/prospeccion-previews/p/fleurs-actually/", "img": "img/showcase-fleurs-actually.jpg", "alt": "Draft website for Fleurs Actually, a florist in Bishan"}
+    {"title": "The Parlour", "family": "Hair salon · Kovan", "href": "https://previews.mnkykonnekt.com/p/the-parlour/", "img": "img/showcase-the-parlour.jpg", "alt": "Draft website for The Parlour, a hair salon in Kovan"},
+    {"title": "Grease Monkey Barber Garage", "family": "Barbershop · Rochor", "href": "https://previews.mnkykonnekt.com/p/grease-monkey-barber-garage/", "img": "img/showcase-grease-monkey-barber-garage.jpg", "alt": "Draft website for Grease Monkey Barber Garage"},
+    {"title": "Tai Dental Surgery", "family": "Dental clinic · Ang Mo Kio", "href": "https://previews.mnkykonnekt.com/p/tai-dental-surgery-pte-ltd/", "img": "img/showcase-tai-dental-surgery-pte-ltd.jpg", "alt": "Draft website for Tai Dental Surgery"},
+    {"title": "Fleurs Actually", "family": "Florist · Bishan", "href": "https://previews.mnkykonnekt.com/p/fleurs-actually/", "img": "img/showcase-fleurs-actually.jpg", "alt": "Draft website for Fleurs Actually, a florist in Bishan"}
   ],
   "faq_title": "Questions",
   "faq": [
