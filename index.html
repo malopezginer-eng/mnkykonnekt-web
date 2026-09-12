@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MNKY KONNEKT · Your website is already built. Pay only if you want it.</title>
-<meta name="description" content="Ready-made one-page websites for local businesses in Singapore. We draft it from what you already publish, you look at it first, S$590 one-off, live on your own domain within 7 working days.">
+<meta name="description" content="Ready-made one-page websites for local businesses in Singapore. We draft it from what you already publish, you look at it first, S$590 one-off, live on your own domain.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MNKY KONNEKT">
 <meta property="og:title" content="Your website is already built. Pay only if you want it.">
-<meta property="og:description" content="Ready-made one-page websites for local businesses in Singapore. You look at the draft first. S$590, live on your own domain within 7 working days.">
+<meta property="og:description" content="Ready-made one-page websites for local businesses in Singapore. You look at the draft first. S$590, live on your own domain.">
 <meta property="og:url" content="https://mnkykonnekt.com/">
 <meta property="og:image" content="https://mnkykonnekt.com/img/after-salon.jpg">
 <meta property="og:image:width" content="1440">
@@ -124,19 +124,6 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
 @media (max-width: 1100px) { .nav ul { display: none; } }
 @media (max-width: 480px) { .brandmark span.word { display: none; } }
 
-/* ===== tres cifras: banda de color pleno ===== */
-.stats .band-kicker { font: 600 12px/1.4 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-lite); margin: 0 0 clamp(26px, 4vw, 44px); }
-.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(22px, 3.4vw, 44px); }
-.stat { border-top: 2px solid rgba(242,177,52,.55); padding-top: 20px; }
-.stat b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(62px, 8.6vw, 128px); line-height: .88; letter-spacing: -0.05em; color: #fff; font-variant-numeric: tabular-nums; min-width: 3.4ch; margin-bottom: 10px; }
-/* barra fina bajo cada cifra: sin JS sale llena hasta su porcentaje; con JS la llena el scroll */
-.stat-bar { display: block; height: 4px; border-radius: 2px; background: rgba(255,255,255,.16); margin: 0 0 16px; overflow: hidden; }
-.stat-bar i { display: block; height: 100%; border-radius: 2px; background: var(--accent); transform-origin: 0 50%; }
-.stat p { margin: 0 0 10px; font-size: clamp(14.5px, 1.2vw, 16px); color: var(--on-teal); line-height: 1.5; }
-.stat a { font-size: 13px; font-weight: 600; color: var(--accent-lite); text-underline-offset: 3px; }
-.stat a:hover { color: #fff; }
-@media (max-width: 860px) { .stat-row { grid-template-columns: 1fr; gap: 28px; } .stat b { font-size: clamp(58px, 17vw, 96px); margin-bottom: 7px; } .stat-bar { margin-bottom: 11px; } }
-
 /* ===== what you get: bento asimetrico ===== */
 .get { background: var(--tint); }
 .get h2 { max-width: 20ch; margin-bottom: 12px; }
@@ -224,8 +211,6 @@ section { padding: clamp(44px, 6.4vw, 92px) 0; }
    sin JS (.mk-anim no llega) ya estan en teal, que es el estado final */
 .mk-anim .safe-grid li::before { color: #8d9198; transition: color .4s ease; }
 .mk-anim .safe-grid li.is-seen::before { color: var(--brand); }
-.safe-grid li:last-child { grid-column: 1 / -1; }
-.safe-grid li:last-child p { max-width: 74ch; }
 @media (max-width: 780px) { .safe-grid { grid-template-columns: 1fr; } }
 
 /* ===== who you deal with ===== */
@@ -1254,11 +1239,6 @@ button.mkd-dot.is-red::after {
   .mkd-meta { padding: 11px 14px 12px; }
   .mkd-lead, .mkd-foot { margin-top: 12px; }
   .cta { padding: 32px 0; }
-  .stats .band-kicker { margin-bottom: 22px; }
-  .stat-row { gap: 16px; }
-  .stat { padding-top: 12px; }
-  .stat b { font-size: clamp(54px, 15vw, 96px); margin-bottom: 6px; }
-  .stat p { margin-bottom: 8px; }
   .get-grid { margin-top: 16px; gap: 8px; }
   .get-grid article { padding: 15px; }
   .get-grid article.lg { padding: 20px 18px 22px; gap: 14px; }
@@ -1292,10 +1272,10 @@ button.mkd-dot.is-red::after {
       <li><a href="#price">Price</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#safe">Why it is safe</a></li>
-      <li><a href="#who">Who you deal with</a></li>
+      <li><a href="#who">Who we are</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a class="btn btn-brand btn-sm" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
+    <a class="btn btn-brand btn-sm" href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp us</a>
   </div>
 </nav>
 
@@ -1307,12 +1287,12 @@ button.mkd-dot.is-red::after {
   <div class="mkh-head">
     <span class="kicker">Ready-made websites for local businesses</span>
     <h1 class="mkh-h1">Your website is <em class="mkh-em">already built</em>. Pay only if you want it.</h1>
-    <p class="lead">A proper one-page site for your shop, made from what you already publish: prices, opening hours, team, reviews, WhatsApp, map. You look at it first. S$590, live on your own domain within 7 working days.</p>
+    <p class="lead">A proper one-page site for your shop, made from what you already publish: prices, opening hours, team, reviews, WhatsApp, map. You look at it first. S$590, live on your own domain.</p>
     <div class="cta-line">
       <span class="price">S$590</span>
-      <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp Miguel</a>
+      <a class="btn btn-brand" href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp us</a>
     </div>
-    <ul class="trust"><li><span class="mkh-uw">No payment until you approve the final version<i class="mkh-ul" id="mkh-ul" aria-hidden="true"></i></span></li><li>Fixed price in SGD, no surprises</li><li>Live in 7 working days or your money back</li><li>Your own domain, in your name</li><li>One person with a name: Miguel Ángel López</li></ul>
+    <ul class="trust"><li><span class="mkh-uw">No payment until you approve the final version<i class="mkh-ul" id="mkh-ul" aria-hidden="true"></i></span></li><li>Fixed price: S$590, in SGD</li><li>Your own domain, in your name</li></ul>
     <p class="mkh-hint">Scroll <span aria-hidden="true"></span></p>
   </div>
 
@@ -1454,16 +1434,6 @@ button.mkd-dot.is-red::after {
   <p class="mkh-cap">Both versions are drawn here for a salon that does not exist &middot; the first one is the kind of template site most shops have today</p>
 </header>
 
-<section class="stats band-teal" id="stats">
-  <div class="wrap">
-    <p class="band-kicker">What people do before they visit</p>
-    <div class="stat-row">
-      <div class="stat"><b>85%</b><span class="stat-bar" aria-hidden="true"><i style="width:85%"></i></span><p>of Singaporeans check a business online before they visit. If your site looks broken on a phone, they go elsewhere.</p><a href="https://hashmeta.com/blog/singapore-seo-landscape-in-trends-and-opportunities/" target="_blank" rel="noopener">Source</a></div>
-      <div class="stat"><b>76%</b><span class="stat-bar" aria-hidden="true"><i style="width:76%"></i></span><p>of people who search for a local business on their phone visit within 24 hours. Your hours, prices and WhatsApp need to be right there.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
-      <div class="stat"><b>87%</b><span class="stat-bar" aria-hidden="true"><i style="width:87%"></i></span><p>read reviews before they visit. We put your real reviews and your Google map on the page.</p><a href="https://hashmeta.com/blog/local-seo-singapore-complete-guide-for-small-businesses/" target="_blank" rel="noopener">Source</a></div>
-    </div>
-  </div>
-</section>
 
 <section class="get tex" id="get">
   <div class="wrap">
@@ -1626,8 +1596,8 @@ button.mkd-dot.is-red::after {
       </article>
       <article><h3>Your prices and hours</h3><p>Exactly as you publish them, with "open now" worked out live.</p></article>
       <article><h3>WhatsApp and call buttons</h3><p>One tap to book. A fixed bar on mobile so it is always there.</p></article>
-      <article><h3>Your team and reviews</h3><p>The people they will meet and what real customers said, with the source.</p></article>
-      <article><h3>Live in 7 working days</h3><p>From payment and your final details to a live site. Usually faster; if not, your money back.</p></article>
+      <article><h3>Your team and reviews</h3><p>The people they will meet and what your customers said, with the source.</p></article>
+      <article><h3>Live within days of payment</h3><p>Domain, hosting and go-live are on us. Late? Your money back.</p></article>
       <article class="accent"><h3>Your own domain</h3><p>yourshop.com, registered in your name. First year included. Prefer .sg or .com.sg? Add S$79.</p></article>
       <article class="sm"><h3>Map and how to get there</h3><p>Nearest MRT, buses, what to look for, where to park.</p></article>
       <article class="sm"><h3>Two rounds of changes</h3><p>Tell us what to fix. Then tell us again. Both included.</p></article>
@@ -1642,21 +1612,21 @@ button.mkd-dot.is-red::after {
       <ul>
         <li>One page, fast on a phone, on your own domain</li>
         <li>Your prices, hours, team, reviews, WhatsApp and map</li>
-        <li>Live in 7 working days or your money back (the clock pauses while we wait on you) · two rounds of changes · .com domain in your name, first year included</li>
+        <li>You approve first, then pay. Live within 7 working days of payment, or your money back · two rounds of changes · .com domain in your name, first year included</li>
         <li>Optional care plan from month 13: S$290/year. Hosting, .com renewal, up to 6 change requests a year within 2 working days, backups. Other domain extensions at cost. Cancel any time; we hand everything over.</li>
         <li>Prefer a .sg or .com.sg domain? Add S$79 the first year</li>
-        <li>Pay by PayNow, bank transfer or Wise in SGD — no fee on your side. Card on request. Invoice from MNKY KONNEKT SL.</li>
+        <li>You pay by invoice: PayNow, bank transfer in SGD or card. No fee on your side. Invoice from MNKY KONNEKT SL.</li>
         <li>No GST is charged by us. GST-registered customers should check whether reverse charge applies.</li>
       </ul>
-      <div class="actions" style="margin-top:20px"><a class="btn btn-brand" href="https://previews.mnkykonnekt.com/offer/" target="_blank" rel="noopener">See the full offer and pay</a><a class="btn btn-ghost" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+      <div class="actions" style="margin-top:20px"><a class="btn btn-brand" href="https://previews.mnkykonnekt.com/offer/" target="_blank" rel="noopener">See the full offer</a><a class="btn btn-ghost" href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
     </div>
     <div class="cmp" data-reveal>
       <h3>What a website costs in Singapore</h3>
       <table>
-        <tr><td>Agency, one-page site</td><td>from S$1,500</td></tr>
-        <tr><td>Agency, small business site</td><td>S$2,000 – 5,000</td></tr>
-        <tr><td>Freelancer, project-based</td><td>S$800 – 4,000</td></tr>
-        <tr><td>DIY builder (Wix, Squarespace): you build it and maintain it</td><td>S$20 – 40 / month</td></tr>
+        <tr><td>Agency, informational site (4–6 pages)</td><td>S$2,000 – 5,000</td></tr>
+        <tr><td>Small site, 3–5 pages</td><td>S$2,500 – 5,000</td></tr>
+        <tr><td>Freelancer, basic site</td><td>under S$2,000</td></tr>
+        <tr><td>DIY builder (Wix, Squarespace): you build it and maintain it</td><td>about S$20 – 40 / month</td></tr>
         <tr class="us"><td>MNKY KONNEKT, built before you pay, once</td><td>S$590</td></tr>
       </table>
       <p>Sources: <a href="https://www.creativeans.com/resources/web-design-singapore-real-costs-pricing-guide-for-2025" target="_blank" rel="noopener">Creativeans</a> and <a href="https://lemonade-it.com/cost-of-web-design-in-singapore/" target="_blank" rel="noopener">Lemonade</a> pricing guides, 2025; <a href="https://www.wix.com/plans" target="_blank" rel="noopener">Wix</a> and <a href="https://www.squarespace.com/pricing" target="_blank" rel="noopener">Squarespace</a> plan pages.</p>
@@ -1768,7 +1738,7 @@ button.mkd-dot.is-red::after {
             <li class="mkp-step">
               <span class="mkp-num" aria-hidden="true"></span>
               <h3>You approve, you pay, we put it live</h3>
-              <p>When the final version is the way you want it, you pay S$590 and the site goes on your own domain within 7 working days of payment and of your final details. You own it.</p>
+              <p>When the final version is the way you want it, you pay S$590. We register your domain and put the site live within 7 working days. You own it.</p>
             </li>
           </ol>
         </div>
@@ -1776,7 +1746,7 @@ button.mkd-dot.is-red::after {
       </div>
     </div>
 
-    <p class="mkp-note">You owe nothing until you approve the final version. If you do not want the draft, just say so and we remove it. Not live within 7 working days of payment and of receiving your logo, text and domain details? Full refund, by Wise. The clock pauses while we wait on you.</p>
+    <p class="mkp-note">You owe nothing until you approve the final version. If you do not want the draft, say so and we remove it. Drafts use licensed stock photos; send yours and we swap them in.</p>
   </div>
 </section>
 
@@ -1900,15 +1870,12 @@ button.mkd-dot.is-red::after {
     <span class="rule" aria-hidden="true"></span><h2 data-reveal>Why it is safe to say yes</h2>
     <p class="lead" data-reveal>You are buying from a company you have never heard of, in another country. Fair enough. Here is what protects you.</p>
     <ol class="safe-grid">
-      <li><div><b>You pay after you approve</b><p>The draft is free. Two rounds of changes are free. You only pay when the final version is the one you want.</p></div></li>
+      <li><div><b>You pay after you approve</b><p>The draft and two rounds of changes are free. You pay when the final version is the one you want.</p></div></li>
       <li><div><b>Fixed price in SGD</b><p>S$590. No hourly extras, no surprise on the invoice. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></div></li>
-      <li><div><b>A registered company you can check</b><p>MNKY KONNEKT SL, NIF B22561179, Commercial Registry of Murcia, Spain. <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">See our entry in the official registry gazette (BORME, 1 July 2025)</a>. Every payment comes with a proper invoice.</p></div></li>
-      <li><div><b>One person, with a name</b><p>A small studio in Spain — you always deal with the same person, Miguel Ángel López. <a href="#who">Who you deal with</a>.</p></div></li>
-      <li><div><b>WhatsApp first</b><p>Write or call <a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">+34 623 827 167</a> before you decide anything. A Spanish number, because we are a Spanish company; we work Singapore hours.</p></div></li>
-      <li><div><b>Secure payment</b><p>PayNow, bank transfer or Wise, in SGD, through our payment links. Card on request. We never see your card details.</p></div></li>
-      <li><div><b>Live in 7 working days, or your money back</b><p>Counted from payment and from receiving your logo, text and domain details; the clock pauses while we wait on you. Refund by Wise.</p></div></li>
-      <li><div><b>It is yours</b><p>The domain is registered in your name and the files are yours. If you ever stop the care plan, we hand everything over.</p></div></li>
-      <li><div><b>Singapore hours</b><p>We work on your time zone and reply within a working day, by WhatsApp or email.</p></div></li>
+      <li><div><b>A registered company you can check</b><p>MNKY KONNEKT SL, NIF B22561179, Commercial Registry of Murcia, Spain. <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">See our entry in the official registry gazette (BORME)</a>. Every payment comes with an invoice.</p></div></li>
+      <li><div><b>Real people you can reach</b><p>Write or call <a href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">+34 623 827 167</a> on WhatsApp before you decide anything. A Spanish number: we are a Spanish company working Singapore hours, and we reply within a working day.</p></div></li>
+      <li><div><b>Live within 7 working days, or your money back</b><p>Counted from payment. Refund in full, by bank transfer.</p></div></li>
+      <li><div><b>It is yours</b><p>The domain is registered in your name and the files are yours. Stop the care plan and we hand everything over.</p></div></li>
     </ol>
   </div>
 </section>
@@ -1919,10 +1886,10 @@ button.mkd-dot.is-red::after {
       <img id="miguelPhoto" src="img/miguel.jpg" alt="Miguel Ángel López, founder of MNKY KONNEKT" width="200" height="200" loading="lazy" onerror="this.onerror=null;this.src='img/logo-512.png';this.classList.add('is-logo-fallback')">
     </div>
     <div data-reveal>
-      <span class="rule" aria-hidden="true"></span><h2>Who you deal with</h2>
-      <p><b>Miguel Ángel López</b>, founder of MNKY KONNEKT. A small studio in Spain — you always deal with the same person, Miguel Ángel López. I draft the page, I make the changes you ask for, and I put it live on your domain.</p>
-      <p>Check us before you decide: the company entry in the Spanish Commercial Registry gazette, our tax ID, and a real person on WhatsApp.</p>
-      <ul class="check"><li><a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a></li><li><a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a></li><li><a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME entry 296563 · 1 July 2025</a></li><li>NIF B22561179</li></ul>
+      <span class="rule" aria-hidden="true"></span><h2>Who we are</h2>
+      <p>MNKY KONNEKT is a small web studio registered in Spain. We build ready-made websites for local businesses in Singapore and work on Singapore hours.</p>
+      <p><b>Miguel Ángel López, founder.</b> He leads every project, from the first message to launch.</p>
+      <ul class="check"><li><a href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a></li><li><a href="mailto:hola@mnkykonnekt.com">hola@mnkykonnekt.com</a></li></ul>
     </div>
   </div>
 </section>
@@ -1931,14 +1898,12 @@ button.mkd-dot.is-red::after {
   <div class="wrap">
     <span class="rule" aria-hidden="true"></span><h2 data-reveal>Questions people ask</h2>
     <div>
-      <details><summary>How did you get my details?</summary><p>From your public listing: your website, Google or your booking page. We only use what you already publish. Reply "remove" to any email and we delete your details and the draft the same day.</p></details>
-      <details><summary>Where are you, and who am I talking to?</summary><p>MNKY KONNEKT SL is a registered company in Spain, and the person you deal with is Miguel Ángel López, the founder. We work Singapore hours. Everything happens by WhatsApp (+34 623 827 167, a Spanish number) or email, and we usually reply within a working day.</p></details>
+      <details><summary>How did you get my details?</summary><p>From your public listing: your website, Google or your booking page. We only use what you already publish. Reply "remove" to any message and we delete your details and the draft the same day.</p></details>
       <details><summary>How can I check you are real?</summary><p>Look us up before you decide: our entry in the Spanish Commercial Registry gazette (<a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME, 1 July 2025, entry 296563</a>), our tax ID (NIF B22561179), this website, and a real person on WhatsApp who can join a short video call. Do not pay or share anything private before that.</p></details>
       <details><summary>Who owns the website?</summary><p>You do. The domain is registered in your name and you get the files. The optional care plan, from month 13, only covers hosting and changes; you can cancel it any time.</p></details>
-      <details><summary>Do I need to send photos?</summary><p>No. Drafts use licensed stock photos. If you have your own, we swap them in; it usually looks better.</p></details>
       <details><summary>Can I have more than one page?</summary><p>Yes. Most shops need one good page; if you need more (a menu, a booking page, a second location), ask and we quote it.</p></details>
-      <details><summary>How do I pay?</summary><p>Through our payment links: PayNow, a local bank transfer in SGD, or your own Wise account, with nothing added on your side. Card on request. You pay only after you approve the final version. You get an invoice from MNKY KONNEKT SL. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></details>
-      <details><summary>What if something goes wrong?</summary><p>If the site is not live within 7 working days of payment and of receiving your logo, text and domain details, you get a full refund by Wise; the clock pauses while we wait on you. After the first year, changes are what the optional care plan is for: up to 6 requests a year, applied within 2 working days. Cancel it any time.</p></details>
+      <details><summary>How do I pay?</summary><p>After you approve the final version, we send an invoice from MNKY KONNEKT SL with a PayNow QR and our SGD bank details; card on request. Nothing is added on your side and we never see your card details. No GST is charged by us; GST-registered customers should check whether reverse charge applies.</p></details>
+      <details><summary>What if something goes wrong?</summary><p>If the site is not live within 7 working days of payment, you get a full refund. The clock pauses while we wait on your logo, text or domain details. After the first year, changes are what the optional care plan is for: up to 6 requests a year, applied within 2 working days. Cancel it any time.</p></details>
       <details><summary>Is there a catch?</summary><p>No. We draft websites for local businesses before we contact them because it is the only honest way to show what you would get. If you say no, we take the draft down and that is the end of it.</p></details>
     </div>
   </div>
@@ -1956,12 +1921,12 @@ button.mkd-dot.is-red::after {
     <div data-reveal>
       <span class="rule" aria-hidden="true"></span>
       <h2>Want a draft for your business?</h2>
-      <p>WhatsApp Miguel with your shop's name and where it is. If it makes sense, you get a link to a finished draft. No cost, no obligation.</p>
-      <div class="actions"><a class="btn btn-accent btn-lg" href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a><a class="btn btn-ghost" href="mailto:hola@mnkykonnekt.com?subject=A%20website%20for%20my%20business">hola@mnkykonnekt.com</a></div>
+      <p>Send us your shop's name and where it is. If it makes sense, you get a link to a finished draft. No cost, no obligation.</p>
+      <div class="actions"><a class="btn btn-accent btn-lg" href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a><a class="btn btn-ghost" href="mailto:hola@mnkykonnekt.com?subject=A%20website%20for%20my%20business">hola@mnkykonnekt.com</a></div>
     </div>
     <div class="cta-aside" data-reveal>
       <span class="figure">S$590</span>
-      <p>Live in 7 working days or your money back (the clock pauses while we wait on you)</p>
+      <p>You approve first, then pay</p>
     </div>
   </div>
 </section>
@@ -1969,7 +1934,7 @@ button.mkd-dot.is-red::after {
 <footer>
   <div class="wrap">
     <span>MNKY KONNEKT SL · NIF B22561179 · Registro Mercantil de Murcia · <a href="https://www.boe.es/borme/dias/2025/07/01/pdfs/BORME-A-2025-123-30.pdf" target="_blank" rel="noopener">BORME 1 July 2025, entry 296563</a> · Spain</span>
-    <span>Miguel Ángel López · <a href="https://wa.me/34623827167?text=Hi%20Miguel%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a> · hola@mnkykonnekt.com · MNKY KONNEKT SL is not GST-registered in Singapore. · <a href="https://mnkykonnekt.com/privacy.html">Privacy</a></span>
+    <span><a href="https://wa.me/34623827167?text=Hi%2C%20I%20saw%20mnkykonnekt.com" target="_blank" rel="noopener">WhatsApp +34 623 827 167</a> · hola@mnkykonnekt.com · MNKY KONNEKT SL is not GST-registered in Singapore · <a href="https://mnkykonnekt.com/privacy.html">Privacy</a></span>
   </div>
 </footer>
 
@@ -3046,21 +3011,6 @@ document.addEventListener("DOMContentLoaded", function () {
       var late = el.closest("#who") ? .5 : 0;                     /* en #who el texto entra tras la foto */
       gsap.from(el, { y: 24, opacity: 0, duration: .75, delay: late, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
     });
-
-    /* ---- #stats: las cifras cuentan y bajo cada una una barra ambar que llena el scroll ---- */
-    var statRow = document.querySelector(".stat-row");
-    if (statRow) {
-      gsap.from(statRow.children, { y: 40, opacity: 0, duration: .9, ease: SOFT, stagger: .18, scrollTrigger: { trigger: statRow, start: "top 84%", once: true } });
-      gsap.utils.toArray(".stat b").forEach(function (b) {
-        var target = parseInt(b.textContent, 10); if (!target) return;
-        var o = { v: 0 };
-        gsap.to(o, { v: target, duration: 1.95, ease: "power2.out", scrollTrigger: { trigger: statRow, start: "top 84%", once: true },
-          onUpdate: function () { b.textContent = Math.round(o.v) + "%"; },
-          onComplete: function () { b.textContent = target + "%"; } });
-      });
-      gsap.fromTo(".stat-bar i", { scaleX: 0 }, { scaleX: 1, ease: "none",
-        scrollTrigger: { trigger: statRow, start: "top 88%", end: "top 18%", scrub: .8 } });
-    }
 
     /* ---- #get: el telefono entra desde abajo y se endereza; el bento se enciende por columnas ---- */
     var phone = document.querySelector("#getGrid .mkm-stagewrap");
