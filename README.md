@@ -9,8 +9,14 @@ llega del laboratorio `C:\dev\prospeccion-previews\lab\b\` con las rutas remapea
 `img/posters/`), sin `noindex` y con el beacon de Cloudflare Analytics. `demos/demo-*/` son las cuatro webs de negocios
 ficticios (generadas por el motor de previews con `--final`, `noindex` a mano, sin datos marcables, `Disallow: /demos/`
 en `robots.txt`); `img/posters/` sus pósters. Historia y decisiones: `C:\dev\prospeccion\docs\plans\2026-09-11-web-espectacular.md`
-y `2026-09-12-web-tercera-vuelta.md`; auditoría en `lab\b\NOTAS.md` del laboratorio. Para volver a copiar desde el lab:
+y `2026-09-12-web-tercera-vuelta.md`; auditoría en `lab\b\NOTAS.md` del laboratorio. **Desde el 12/09/2026 (noche) la web se edita directamente en este repo** (rama `espectacular`; Miguel hace el merge a `main`,
+que es producción); el laboratorio `lab` queda como archivo y ya no se copia. Si hiciera falta volver a copiar desde el lab:
 `sed` de `../assets/img/` → `img/`, `../assets/fonts/` → `fonts/`, `../pieces/posters/` → `img/posters/`, `../demos/` → `demos/`.
+
+«Fast on a phone» en móvil (12/09, sesión dedicada): al llegar al 100 % del rail la página se ancla (`html.mkm-locked`) y solo se
+mueve la demo; se sale con la × o la barra «Back to MNKY» (o Escape), que llevan el scroll justo después de la escena. Antes el
+scroll de la demo se encadenaba a la web sin que el visitante lo supiera. Probado en Playwright (390×844, con y sin `reduce`);
+el gesto táctil real se comprueba en iPhone.
 
 Desde el 2026-09-09 la página se **escribe a mano** en `index.html` (CSS y JS incrustados, GSAP por CDN con `defer`,
 completa sin JavaScript y con `prefers-reduced-motion` respetado). Ya no se genera con el motor de previews:
