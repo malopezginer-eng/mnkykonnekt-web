@@ -6,35 +6,34 @@
   "email": "hola@mnkykonnekt.com",
   "family": "studio",
   "title": "MNKY KONNEKT · One-page websites for local businesses in Singapore",
-  "description": "A small web studio in Spain building one-page websites for local businesses in Singapore: services, prices, hours, map and a booking button, on a page that works on a phone. S$590 one-off.",
-  "eyebrow": "Web studio · Spain, working with Singapore",
-  "headline": "Your business, on one good page",
-  "subheadline": "We build one-page websites for local businesses in Singapore: your services, your prices, opening hours, map and a booking button, on a page that works on the phone your customers actually use.",
+  "description": "Websites for local businesses in Singapore. We build the first version before you decide. S$590 one-off, on your own domain.",
+  "eyebrow": "Websites for local businesses · Singapore",
+  "headline": "See your website before you pay for it",
+  "subheadline": "We build a one-page website for your business using the information you already publish. You see it working first and pay only if you want to take it live.",
   "hero_chips": ["S$590 one-off, no hidden costs", "Live on your own domain", "You see the draft before you pay"],
   "cta_primary": "Write to us",
   "cta_href": "mailto:hola@mnkykonnekt.com?subject=Website%20for%20my%20business",
   "services_title": "What we do",
-  "services_lead": "Three things, priced up front. No quotes, no packages to decode.",
+  "services_lead": "A clear price, your own domain and everything your customers need on one page.",
   "services": [
     {"name": "One-page website", "price": "S$590 one-off", "desc": "The full page: your photos, logo and text, mobile-first and secure (https), booking or WhatsApp button, map and opening hours, your own domain with the first year included, and two rounds of changes before launch."},
-    {"name": "Care plan", "price": "S$29 / month", "desc": "Optional, after launch. Hosting and domain renewal, updates to hours, prices, photos and text within two working days, security and backups. Cancel any month."},
-    {"name": "Google Business Profile", "price": "S$199 / month", "desc": "Your profile set up or cleaned up: hours, photos, services and categories. Weekly posts, every review answered within two working days, and a one-page report each month. Cancel any month."}
+    {"name": "Care plan", "price": "S$290 / year from month 13", "desc": "Optional from the second year. Hosting, .com renewal, backups and up to 6 change requests a year, completed within 2 working days. Cancel any time."}
   ],
   "about_title": "Who we are",
   "about": [
-    "MNKY KONNEKT is a small web studio registered in Spain and run by Miguel López. We work with local businesses in Singapore, from hair salons and dental clinics to workshops, florists and tuition centres, that need a good website more than a big one.",
-    "You deal with one person from the first email to launch. We write the first draft before you have paid anything, so you decide with the page in front of you, not with a proposal."
+    "MNKY KONNEKT is a small web studio registered in Spain. We build websites for local businesses in Singapore.",
+    "Miguel Ángel López is the founder. He will be the person you speak to, from the first message to launch."
   ],
   "highlights": [
-    {"value": "1 person", "label": "From first email to launch"},
+    {"value": "S$590", "label": "Fixed price in SGD"},
     {"value": "2 rounds", "label": "Of changes before launch"},
-    {"value": "No GST", "label": "Spanish company; the price is the price"}
+    {"value": "Your domain", "label": "Registered in your name"}
   ],
   "why_title": "How it works",
   "why": [
-    {"title": "You see the draft first", "desc": "We build a full draft from public information about your business and send you the link. No call, no slide deck."},
-    {"title": "We finish it with your material", "desc": "Your photos, your logo, the text you want changed. Two rounds of changes, then it is ready."},
-    {"title": "It goes live on your domain", "desc": "We register it for you or connect the one you already own. The files are yours; if you ever stop the care plan, we hand everything over."}
+    {"title": "We build the first version", "desc": "We use the information you already publish and send you a link to the working page."},
+    {"title": "You tell us what to change", "desc": "Send your photos, logo and corrections by WhatsApp or email. Two rounds of changes are included."},
+    {"title": "You approve, pay and go live", "desc": "When you are happy with the final version, you pay S$590. We put it live on your domain within 7 working days."}
   ],
   "showcase_title": "Recent drafts",
   "showcase_lead": "Draft pages built for real Singapore businesses from public information and stock photos. Each one is a design proposal, not a client's live site.",
@@ -46,15 +45,15 @@
   ],
   "faq_title": "Questions",
   "faq": [
-    {"q": "How do I pay?", "a": "By card through Stripe, or by bank transfer. You receive a receipt immediately and an invoice from MNKY KONNEKT SL. No GST applies: we are a Spanish company with no GST registration in Singapore, so the price you see is the price you pay."},
+    {"q": "How do I pay?", "a": "After you approve the final version, MNKY KONNEKT SL sends you an invoice with a PayNow QR and our SGD bank details. Card is available on request. No GST is charged by us; GST-registered customers should check whether reverse charge applies."},
     {"q": "Do I own the website?", "a": "Yes. The domain is registered in your name and the page files are yours. If you stop the care plan, we hand everything over."},
     {"q": "What if I need more than one page?", "a": "Most small businesses need exactly one good page. If you need more, a menu, a price list or a gallery, we quote it as a small add-on."},
-    {"q": "How did you get my details?", "a": "If we wrote to you, it was from your own website or a public listing. A draft uses only public information about your business and stock photos; nothing is copied from your site. Reply \"remove\" and the draft disappears the same day."},
-    {"q": "Where are you?", "a": "In Spain, working with Singapore on Singapore hours where it matters. Everything happens by email, with a call if you prefer one."}
+    {"q": "How did you get my details?", "a": "From your website or another public business listing. We use the information you publish to build the first version. Reply \"remove\" and we delete your details and the draft the same day."},
+    {"q": "Where are you?", "a": "MNKY KONNEKT is registered in Spain and works with businesses in Singapore. You can reach us by WhatsApp or email, and ask for a video call before you decide."}
   ],
   "contact_title": "Contact",
   "languages": ["English", "Spanish"],
-  "cta_title": "Want a draft for your business?",
+  "cta_title": "Would you like us to build one for you?",
   "footer_left": "MNKY KONNEKT SL · NIF B22561179 · Spain",
   "footer_note": "hola@mnkykonnekt.com · Registered in Spain; not GST-registered in Singapore.",
   "photos": {"hero": {"original": "img/hero-the-parlour.jpg", "alt": "Draft website for The Parlour, a hair salon in Kovan, built by MNKY KONNEKT", "width": 1440, "height": 900, "avg_color": "#2a2a2e"}, "credits": []}
