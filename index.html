@@ -1080,7 +1080,11 @@ html.mkm-scene .get-grid article.lg {
   /* el rail = el hueco pegajoso (100svh - 64) + 130svh de recorrido: tres veces
      y media el de la vuelta anterior, para que la escena no se vaya de golpe
      mientras se scrollea. El tope lo pone el presupuesto de pantallas. */
-  display: block; height: calc(220svh - 64px);
+  display: block; height: calc(280svh - 102.4px);
+  /* = (220svh - 64px) de rail + una COLA de 0,6 x (100svh - 64px) en la que la
+     escena sigue a pantalla completa: la inercia del dedo que pasa de largo
+     del 100 % no se lleva la escena (ni la x) fuera de la pantalla. El JS
+     descuenta la cola al medir el progreso (tail()). */
   padding: 0; border-color: transparent; background: none; box-shadow: none;
   perspective: none; overflow: visible;
   /* la entrada de pagina (yPercent/rotateX de GSAP) no puede mover un rail pegajoso */
@@ -1162,8 +1166,11 @@ html.mkm-scene .get-grid article.lg .mkm-stagewrap .mk-phone {
    se encadenaba al rail y la web de MNKY se movia sin que nadie lo supiera) */
 html.mkm-scene .get-grid article.lg .mkm-view,
 html.mkm-scene .get-grid article.lg .mkm-panels { pointer-events: none; }
-html.mkm-scene.mkm-full .get-grid article.lg .mkm-view,
-html.mkm-scene.mkm-full .get-grid article.lg .mkm-panels { pointer-events: auto; }
+html.mkm-locked .get-grid article.lg .mkm-view,
+html.mkm-locked .get-grid article.lg .mkm-panels { pointer-events: auto; }
+/* a pantalla completa sin anclar (p. ej. subiendo desde abajo) el telefono es un
+   boton: un toque entra en la demo */
+html.mkm-scene.mkm-full:not(.mkm-locked) .get-grid article.lg .mkm-stagewrap { cursor: pointer; }
 html.mkm-locked .get-grid article.lg .mkm-view { overscroll-behavior: contain; }
 /* salidas de la escena anclada: x arriba a la derecha y barra abajo. Viven en
    .mkm-stage (sin transform, para que el posicionamiento no se tuerza) */
@@ -2740,7 +2747,7 @@ document.addEventListener("DOMContentLoaded", function () {
       /* medidas del reposo; las rellenan measureScene() / measureDesk() */
       var TW = 1, TH = 1, AR = RATIO, sw0 = 1, padX0 = 10, padY0 = 10, sth0 = 38, ifH = 780;
       var badgeT = null, wasFull = false;
-      var locked = false, lockY = 0;
+      var locked = false, lockY = 0, armed = true, lastY = -1, restT = null;
 
       /* ---- anclaje: al 100 % del rail la pagina se queda quieta ----
          Se fija el scroll justo en el final del rail (la escena entera en
@@ -2748,10 +2755,16 @@ document.addEventListener("DOMContentLoaded", function () {
          del iframe, overscroll-behavior: none corta la cadena hacia la pagina.
          iOS no siempre respeta overflow: hidden en <html>, asi que ademas se
          cancela el touchmove que llegue al documento (los toques dentro del
-         iframe nunca llegan aqui, asi que la demo sigue desplazandose). */
+         iframe nunca llegan aqui, asi que la demo sigue desplazandose).
+         Lecciones del iPhone (12/09): (1) un scrollTo en plena inercia iOS lo
+         ignora, asi que solo se ancla cuando el scroll esta EN REPOSO; (2) se
+         ancla solo BAJANDO y tras haber pasado por menos del 100 % ("armed"):
+         al volver desde abajo la escena se atraviesa sin agarrar a nadie, y
+         quien quiera entrar toca el telefono. */
+      function tail() { return Math.round(0.6 * stage.offsetHeight); }
       function railEnd() {
         var top = card.getBoundingClientRect().top + window.pageYOffset;
-        return Math.round(top + (card.offsetHeight - stage.offsetHeight) - 64);
+        return Math.round(top + (card.offsetHeight - stage.offsetHeight - tail()) - 64);
       }
       function frameLock(onOff) {
         try { var d = ifr && ifr.contentDocument; if (d) { d.documentElement.classList.toggle("mkm-lock", onOff); } } catch (err) {}
@@ -2761,11 +2774,15 @@ document.addEventListener("DOMContentLoaded", function () {
          cambia de alto), se vuelve al punto exacto */
       function resnap() { if (locked && Math.abs(window.pageYOffset - lockY) > 1) { window.scrollTo(0, lockY); } }
       function lock() {
-        if (locked) { return; }
-        locked = true;
+        if (locked || !on) { return; }
+        locked = true; armed = false;
+        clearTimeout(restT);
         lockY = railEnd();
         window.scrollTo(0, lockY);
         root.classList.add("mkm-locked");
+        badge.textContent = "Example page · scroll it · × to leave";
+        card.classList.add("mkm-showbadge"); clearTimeout(badgeT);
+        badgeT = setTimeout(function () { card.classList.remove("mkm-showbadge"); }, 3000);
         frameLock(true);
         document.addEventListener("touchmove", stopTouch, { passive: false });
         window.addEventListener("scroll", resnap, { passive: true });
@@ -2778,14 +2795,31 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("touchmove", stopTouch);
         window.removeEventListener("scroll", resnap);
         if (leave) {
-          /* la pagina sigue justo despues de la escena: el rail termina y no se vuelve a caer en ella */
-          var to = lockY + (window.innerHeight - 64);
+          /* la pagina sigue justo despues de la escena: cola y hueco pegajoso
+             incluidos, para no volver a caer en ella */
+          var to = lockY + tail() + stage.offsetHeight;
           try { window.scrollTo({ top: to, behavior: "smooth" }); } catch (err) { window.scrollTo(0, to); }
         }
       }
       xBtn.addEventListener("click", function () { unlock(true); });
       backBtn.addEventListener("click", function () { unlock(true); });
       document.addEventListener("keydown", function (e) { if (locked && (e.key === "Escape" || e.key === "Esc")) { unlock(true); } });
+      /* a pantalla completa sin anclar, un toque en el telefono entra en la demo */
+      stagewrap.addEventListener("click", function () { if (on && wasFull && !locked) { lock(); } });
+
+      /* el anclaje se decide con el progreso REAL del scroll y en reposo */
+      function armCheck() {
+        var y = window.pageYOffset, down = y >= lastY; lastY = y;
+        var raw = progress();
+        if (raw < .999) { armed = true; }
+        clearTimeout(restT);
+        /* solo dentro de la cola: si el dedo ya paso de largo y la escena se fue
+           de la pantalla, no se agarra a nadie desde atras */
+        function inTail() { return window.pageYOffset - railEnd() <= tail(); }
+        if (raw >= .999 && !locked && armed && down && inTail()) {
+          restT = setTimeout(function () { if (on && !locked && armed && progress() >= .999 && inTail()) { lock(); } }, 140);
+        }
+      }
 
       function ease(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(2 - 2 * x, 2) / 2; }
       function px(n) { return (Math.round(n * 100) / 100) + "px"; }
@@ -2945,11 +2979,8 @@ document.addEventListener("DOMContentLoaded", function () {
           clearTimeout(badgeT);
           if (full) { badgeT = setTimeout(function () { card.classList.remove("mkm-showbadge"); }, 3000); }
         }
-        /* el anclaje se decide con el progreso REAL del scroll, no con el
-           tweeneado (con scrub el visual va 0,8 s por detras del dedo) */
-        var raw = progress();
-        if (raw >= .999 && !locked) { lock(); }
-        else if (raw < .999 && locked) { unlock(false); }
+        if (!locked) { badge.textContent = full ? "Tap the page to try it" : "Example page · scroll it · × to leave"; }
+        if (locked && progress() < .999) { unlock(false); }
       }
 
       function refresh() {
@@ -2959,7 +2990,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function progress() {
         var r = card.getBoundingClientRect();
-        var travel = r.height - stage.getBoundingClientRect().height;
+        var travel = r.height - stage.getBoundingClientRect().height - tail();
         if (travel <= 0) { return 0; }
         var p = (64 - r.top) / travel;
         return p < 0 ? 0 : (p > 1 ? 1 : p);
@@ -2984,7 +3015,7 @@ document.addEventListener("DOMContentLoaded", function () {
             onUpdate: function () { render(proxy.v); },
             scrollTrigger: {
               trigger: card, start: "top 64px",
-              end: function () { return "+=" + Math.max(1, card.offsetHeight - stage.offsetHeight); },
+              end: function () { return "+=" + Math.max(1, card.offsetHeight - stage.offsetHeight - tail()); },
               scrub: .8, invalidateOnRefresh: true,
               onRefreshInit: measureScene, onRefresh: measureScene
             }
@@ -2992,6 +3023,8 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           window.addEventListener("scroll", onScroll, { passive: true });
         }
+        window.addEventListener("scroll", armCheck, { passive: true });
+        lastY = window.pageYOffset; armed = progress() < .999;
         render(progress());
       }
 
@@ -3003,7 +3036,8 @@ document.addEventListener("DOMContentLoaded", function () {
           tween.kill(); tween = null;
         }
         window.removeEventListener("scroll", onScroll);
-        clearTimeout(badgeT);
+        window.removeEventListener("scroll", armCheck);
+        clearTimeout(badgeT); clearTimeout(restT);
         unlock(false);
         wasFull = false;
         root.classList.remove("mkm-scene");
