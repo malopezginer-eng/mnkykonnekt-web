@@ -1,6 +1,16 @@
 # mnkykonnekt-web
 
-Web de una página de MNKY KONNEKT (https://mnkykonnekt.com), servida en GitHub Pages desde `main` (`CNAME` + `.nojekyll`).
+Web de una página de MNKY KONNEKT (https://mnkykonnekt.com). Hasta el 12/09/2026 servida en GitHub Pages desde `main`
+(`CNAME` + `.nojekyll`); desde esa fecha el destino es **Cloudflare Pages** (GitHub Pages prohíbe el uso comercial), con
+el DNS de Squarespace apuntando al proyecto de Pages cuando Miguel lo confirme.
+
+**Rediseño «espectacular» (rama `espectacular`, 11-12/09/2026, dirección B «before → after theatre»):** `index.html`
+llega del laboratorio `C:\dev\prospeccion-previews\lab\b\` con las rutas remapeadas (`img/`, `fonts/`, `demos/`,
+`img/posters/`), sin `noindex` y con el beacon de Cloudflare Analytics. `demos/demo-*/` son las cuatro webs de negocios
+ficticios (generadas por el motor de previews con `--final`, `noindex` a mano, sin datos marcables, `Disallow: /demos/`
+en `robots.txt`); `img/posters/` sus pósters. Historia y decisiones: `C:\dev\prospeccion\docs\plans\2026-09-11-web-espectacular.md`
+y `2026-09-12-web-tercera-vuelta.md`; auditoría en `lab\b\NOTAS.md` del laboratorio. Para volver a copiar desde el lab:
+`sed` de `../assets/img/` → `img/`, `../assets/fonts/` → `fonts/`, `../pieces/posters/` → `img/posters/`, `../demos/` → `demos/`.
 
 Desde el 2026-09-09 la página se **escribe a mano** en `index.html` (CSS y JS incrustados, GSAP por CDN con `defer`,
 completa sin JavaScript y con `prefers-reduced-motion` respetado). Ya no se genera con el motor de previews:
