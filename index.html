@@ -32,8 +32,6 @@
 html { scroll-padding-top: 82px; scrollbar-gutter: stable; }
 /* visor de demos: bloquear el fondo sin que la pagina se mueva (el gutter ya esta reservado) */
 html.mkd-locked { overflow: hidden; }
-/* escena movil 'Fast on a phone' anclada a pantalla completa: la pagina no se mueve, solo la demo */
-html.mkm-locked { overflow: hidden; }
 section[id], header[id] { scroll-margin-top: 82px; }
 @font-face { font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial"), local("Helvetica"); font-weight: 700 800; size-adjust: 80.6%; }
 @font-face { font-family: "Inter Fallback"; src: local("Arial"), local("Helvetica"); font-weight: 400 600; size-adjust: 106.9%; }
@@ -994,8 +992,21 @@ body > footer a:hover { color: #fff; }
 .get-grid article.lg .mkm-panel::-webkit-scrollbar { display: none; }
 /* en movil el telefono no puede crecer: se limita el ANCHO y la proporcion da el alto
    (214 px -> 464 de alto, lo mismo que ocupaba la maqueta achatada anterior) */
+/* "Try it on your phone": enlace a la demo sin JS; con el visor, lo abre en el
+   mismo <dialog> que las tarjetas de #demos (ver .mkd-card) */
+.mkm-open { display: inline-flex; align-items: center; gap: 8px; margin: 18px 0 0; padding: 12px 18px; border-radius: 999px; background: var(--accent); color: #16130a; font-weight: 700; font-size: 15px; text-decoration: none; letter-spacing: -.01em; transition: transform .15s ease, box-shadow .15s ease; }
+.mkm-open svg { width: 17px; height: 17px; transition: transform .15s ease; }
+.mkm-open:hover { transform: translateY(-1px); box-shadow: 0 10px 22px -12px rgba(0,0,0,.7); }
+.mkm-open:hover svg { transform: translateX(3px); }
+.mkm-open:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.get-grid article.lg .lg-note { margin-top: 14px; }
 @media (max-width: 759.98px) {
-  .mkm-js .get-grid article.lg .mkm-phone { width: min(214px, 58vw, 25.5vh); }
+  /* el telefono manda en la tarjeta: grande, con la demo dentro, y tocable como un
+     boton (la demo no recibe el dedo; se abre en el visor) */
+  .mkm-js .get-grid article.lg .mkm-phone { width: min(300px, 76vw, 36vh); }
+  .mkm-js .get-grid article.lg .mkm-stagewrap { cursor: pointer; }
+  .mkm-js .get-grid article.lg .mkm-view, .mkm-js .get-grid article.lg .mkm-panels { pointer-events: none; }
+  .get-grid article.lg .mkm-try { display: none; }
   /* a 194 px de pantalla todo tiene que encoger un punto para que nada se salga */
   .get-grid article.lg .mkm-tabs { padding: 7px 5px 0; }
   .get-grid article.lg .mkm-tabs button { font-size: 10px; padding: 8px 1px 9px; letter-spacing: -.03em; }
@@ -1061,148 +1072,6 @@ body > footer a:hover { color: #fff; }
   width: var(--mkm-hiw, 120px); max-width: none; height: var(--mkm-hih, 5px); bottom: var(--mkm-hib, 7px); opacity: var(--mkm-f, 1);
 }
 .mkm-js .get-grid article.lg .mkm-phone .mk-phone-screen::after { opacity: var(--mkm-f, 1); }
-
-/* =================================================================
-   ESCENA MOVIL - "tu movil es el marco"  (< 760 px, solo con JS)
-   La tarjeta se convierte en un rail largo y dentro de ella .mkm-stage
-   (lo crea el JS) queda pegajoso justo bajo la nav, midiendo exactamente
-   el hueco visible. Con el scroll el telefono crece SIN escalar nada por
-   encima de el: el JS le da ancho y alto en px y el unico scale que hay
-   es el del propio iframe, que al final vale innerWidth/390 (o sea, el
-   texto de la demo se ve como en un movil de verdad, nunca borroso). Al
-   final su pantalla mide exactamente innerWidth x (innerHeight - 64) y el
-   marco negro, la isla, los botones y la barra de estado ya se han ido.
-   --mkm-e (0 = tarjeta normal, 1 = a pantalla completa) y --mkm-f (1 = con
-   marco, 0 = sin marco) los escribe el JS en la tarjeta. Sin JS no existe
-   html.mkm-scene y la maqueta sigue apilada y legible como siempre.
-   ================================================================= */
-html.mkm-scene .get-grid article.lg {
-  /* el rail = el hueco pegajoso (100svh - 64) + 130svh de recorrido: tres veces
-     y media el de la vuelta anterior, para que la escena no se vaya de golpe
-     mientras se scrollea. El tope lo pone el presupuesto de pantallas. */
-  display: block; height: calc(280svh - 102.4px);
-  /* = (220svh - 64px) de rail + una COLA de 0,6 x (100svh - 64px) en la que la
-     escena sigue a pantalla completa: la inercia del dedo que pasa de largo
-     del 100 % no se lleva la escena (ni la x) fuera de la pantalla. El JS
-     descuenta la cola al medir el progreso (tail()). */
-  padding: 0; border-color: transparent; background: none; box-shadow: none;
-  perspective: none; overflow: visible;
-  /* la entrada de pagina (yPercent/rotateX de GSAP) no puede mover un rail pegajoso */
-  transform: none !important;
-}
-html.mkm-scene .get-grid article.lg:hover { box-shadow: none; transform: none !important; }
-html.mkm-scene .get-grid article.lg .mkm-stagewrap { transform: none !important; }
-
-/* fuera de la escena el contenedor no existe para el layout: la tarjeta sigue
-   siendo el flex de siempre (texto a la izquierda, telefono a la derecha) */
-.mkm-stage { display: contents; }
-/* el borde va en box-shadow y no en border: un borde real le robaria 2 px al
-   hueco y la pantalla del telefono no llegaria a medir innerHeight - 64 exactos */
-/* El hueco pegajoso sigue midiendo lo que la caja de texto (si se le diera el
-   ancho del viewport, su ancho minimo ensancharia la columna de la rejilla y
-   aparecia 1 px de scroll lateral: medido). Quienes se salen a sangre son las
-   dos capas que ya estan fuera del flujo: el fondo (::before) y el lienzo del
-   telefono (.mkm-stagewrap). --mkm-gap / --mkm-gapr son lo que hay de cada
-   borde del stage al borde del viewport; los mide el JS. */
-html.mkm-scene .mkm-stage {
-  display: block; position: sticky; top: 64px; height: calc(100svh - 64px);
-  border: 0; overflow: visible; background: none;
-  --mkm-in: calc(var(--mkm-gap, 0px) * var(--mkm-e, 0));
-  --mkm-inr: calc(var(--mkm-gapr, 0px) * var(--mkm-e, 0));
-}
-html.mkm-scene .mkm-stage::before {
-  content: ""; position: absolute; z-index: 0; top: 0; bottom: 0;
-  left: calc(0px - var(--mkm-in)); right: calc(0px - var(--mkm-inr));
-  border-radius: calc(var(--radius) * var(--mkm-f, 1));
-  box-shadow: inset 0 0 0 1px rgba(17,18,20, var(--mkm-f, 1));
-  background-color: var(--ink);
-  background-image: radial-gradient(115% 68% at 50% 90%, rgba(35,122,119,.45), transparent 62%);
-}
-html.mkm-scene .mkm-stage > .lg-copy {
-  position: absolute; left: 20px; right: 20px; top: 20px; z-index: 2;
-  max-width: none; pointer-events: none;
-  opacity: var(--mkm-copy, 1);
-  transform: translateY(calc((1 - var(--mkm-copy, 1)) * -16px));
-}
-html.mkm-scene .mkm-stage > .mkm-stagewrap {
-  position: absolute; z-index: 1; top: 0; bottom: 0;
-  left: calc(0px - var(--mkm-gap, 0px)); right: calc(0px - var(--mkm-gapr, 0px));
-  display: grid; place-items: center;
-}
-html.mkm-scene .mkm-stagewrap .mkm-cap {
-  position: absolute; bottom: 10px; margin: 0;
-  left: calc(12px + var(--mkm-gap, 0px)); right: calc(12px + var(--mkm-gapr, 0px));
-  font-size: 11.5px; line-height: 1.35;
-  opacity: var(--mkm-copy, 1);
-}
-/* la etiqueta del estado final: aparece a sangre y se va sola a los 2 s */
-.mkm-badge { display: none; }
-html.mkm-scene .mkm-badge {
-  display: block; position: absolute; left: 50%; bottom: 22px; z-index: 6; margin: 0;
-  transform: translateX(-50%); pointer-events: none; white-space: nowrap;
-  background: rgba(12,13,15,.74); color: #F9F6EF; border-radius: 999px;
-  padding: 7px 14px; font-size: 12px; font-weight: 600; letter-spacing: .01em;
-  opacity: 0; transition: opacity .35s ease;
-}
-html.mkm-scene .get-grid article.lg.mkm-showbadge .mkm-badge { opacity: 1; }
-/* el telefono en la escena: el ancho y el alto de la caja los escribe el JS en
-   px cada cuadro (nunca un scale por encima del iframe, que es lo que hacia que
-   la demo se viera con un zoom raro). Lo unico que se mueve con transform es la
-   posicion vertical, que no afecta a la escala del contenido. */
-html.mkm-scene .get-grid article.lg .mkm-stagewrap .mk-phone {
-  aspect-ratio: auto; margin: 0; will-change: width, height;
-  transform: translateY(calc(var(--mkm-ty, 0px) * (1 - var(--mkm-e, 0))));
-  background-color: rgba(11,12,15, var(--mkm-f, 1));
-  box-shadow:
-    inset 0 0 0 calc(1.5px * var(--mkm-f, 1)) rgba(58,61,68, var(--mkm-f, 1)),
-    0 0 0 1px rgba(255,255,255, calc(.08 * var(--mkm-f, 1))),
-    0 42px 76px -30px rgba(0,0,0, calc(.78 * var(--mkm-f, 1))),
-    0 10px 26px -14px rgba(0,0,0, calc(.5 * var(--mkm-f, 1)));
-}
-/* mientras crece o se deshace, el dedo mueve la PAGINA: la demo no se queda el
-   gesto. A pantalla completa la pagina queda ANCLADA (html.mkm-locked, lo pone
-   el JS al llegar al 100 % del rail) y solo se mueve la demo; se sale con la x
-   o con la barra 'Back to MNKY', nunca por arrastre (12/09: el scroll de la demo
-   se encadenaba al rail y la web de MNKY se movia sin que nadie lo supiera) */
-html.mkm-scene .get-grid article.lg .mkm-view,
-html.mkm-scene .get-grid article.lg .mkm-panels { pointer-events: none; }
-html.mkm-locked .get-grid article.lg .mkm-view,
-html.mkm-locked .get-grid article.lg .mkm-panels { pointer-events: auto; }
-/* a pantalla completa sin anclar (p. ej. subiendo desde abajo) el telefono es un
-   boton: un toque entra en la demo */
-html.mkm-scene.mkm-full:not(.mkm-locked) .get-grid article.lg .mkm-stagewrap { cursor: pointer; }
-html.mkm-locked .get-grid article.lg .mkm-view { overscroll-behavior: contain; }
-/* salidas de la escena anclada: x arriba a la derecha y barra abajo. Viven en
-   .mkm-stage (sin transform, para que el posicionamiento no se tuerza) */
-.mkm-x, .mkm-leave { display: none; }
-html.mkm-locked .mkm-x {
-  display: inline-flex; align-items: center; justify-content: center; z-index: 8;
-  position: absolute; top: max(9px, env(safe-area-inset-top)); right: calc(9px - var(--mkm-gapr, 0px));
-  width: 38px; height: 38px; border-radius: 50%; padding: 0; cursor: pointer;
-  border: 1px solid rgba(255,255,255,.2); background: rgba(20,21,24,.72); color: #fff;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.mkm-x svg { width: 45%; height: 45%; }
-html.mkm-locked .mkm-leave {
-  display: flex; align-items: center; justify-content: center; gap: 8px; z-index: 8;
-  position: absolute; bottom: 0; left: calc(0px - var(--mkm-gap, 0px)); right: calc(0px - var(--mkm-gapr, 0px));
-  min-height: 44px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); margin: 0; border: 0;
-  background: rgba(12,13,15,.88); color: #F9F6EF; cursor: pointer;
-  font: 600 14px/1.2 var(--body); letter-spacing: .01em;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.mkm-x:focus-visible, .mkm-leave:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
-/* con la barra abajo, la etiqueta sube para no taparse */
-html.mkm-locked .mkm-badge { bottom: calc(58px + env(safe-area-inset-bottom)); }
-html.mkm-scene .get-grid article.lg .mkm-shots { overscroll-behavior-x: contain; }
-/* la escena cuesta pantallas: se devuelven recortando aire en el resto de #get */
-@media (max-width: 759.98px) {
-  html.mkm-scene .get { padding-block: 34px 40px; }
-  html.mkm-scene .get h2 { margin-bottom: 8px; }
-  html.mkm-scene .get-grid { gap: 8px; margin-top: 24px; }
-  html.mkm-scene .get-grid article:not(.lg) { padding: 15px 16px; }
-  html.mkm-scene .get-grid article:not(.lg) > p { font-size: 14.5px; line-height: 1.45; }
-}
 
 /* =================================================================
    PIEZA 4 - visor de demos navegables  (lab/pieces/demos.html)
@@ -1610,6 +1479,9 @@ button.mkd-dot.is-red::after {
     <span>Tap its buttons</span>
     <span>It is a real page</span>
     </div>
+          <a class="mkm-open" href="demos/demo-salon/index.html"
+             data-name="Plumgrove Hair Room" data-host="plumgrove.example"
+             data-frame-title="Demo site for a fictional hair salon" data-vt="#getGrid .mkm-phone">Try it on your phone<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <span class="lg-note">Example page &middot; not a real business</span>
         </div>
         <div class="mkm-stagewrap">
@@ -2699,137 +2571,28 @@ document.addEventListener("DOMContentLoaded", function () {
        se crea cuando #get entra a menos de una pantalla. Sin JS la maqueta
        dibujada sigue siendo el estado final, apilada y legible.
 
-       Por debajo de 760 px la tarjeta es un rail y el telefono crece con el
-       scroll hasta que su pantalla mide exactamente el hueco visible. La clave
-       de que la demo se vea perfecta: el iframe NUNCA cambia de tamano de
-       maquetacion (390 x 390*AR) ni hay ningun scale por encima de el; lo unico
-       que se mueve es su propio scale, que al final vale innerWidth/390. Asi ni
-       la demo se re-maqueta cuadro a cuadro ni el texto se ve borroso. */
+       12/09 (tercera vuelta de esta pieza): en movil ya NO hay escena que crece
+       con el scroll ni bloqueo de pagina (peleaba con el scroll nativo de iOS:
+       x que no aparecia, pagina "pillada"). El telefono se queda en su tarjeta,
+       grande, con la demo corriendo dentro pero sin recibir el dedo; tocarlo o
+       pulsar "Try it on your phone" abre el visor de demos (un <dialog> que si
+       bloquea el fondo y tiene x). La demo del iframe nunca cambia de tamano de
+       maquetacion (390 x 390*AR): solo se escala. */
     (function () {
       var PHONE = 390, RATIO = 19.5 / 9;
       var card = document.querySelector("#getGrid article.lg");
-      var copy = card && card.querySelector(".lg-copy");
       var stagewrap = card && card.querySelector(".mkm-stagewrap");
       var phone = card && card.querySelector(".mk-phone");
       var scr = card && card.querySelector(".mkm-screen");
-      var cap = card && card.querySelector(".mkm-cap");
       var sect = document.getElementById("get");
-      if (!card || !copy || !stagewrap || !phone || !scr || !sect) { return; }
-
-      /* el contenedor pegajoso se crea aqui: sin JS la tarjeta no cambia */
-      var stage = document.createElement("div");
-      stage.className = "mkm-stage";
-      card.insertBefore(stage, copy);
-      stage.appendChild(copy);
-      stage.appendChild(stagewrap);
-
-      var badge = document.createElement("p");
-      badge.className = "mkm-badge";
-      badge.setAttribute("aria-hidden", "true");
-      badge.textContent = "Example page · scroll it · × to leave";
-      stagewrap.appendChild(badge);
-
-      /* salidas de la escena anclada (solo se ven con html.mkm-locked) */
-      var xBtn = document.createElement("button");
-      xBtn.type = "button"; xBtn.className = "mkm-x";
-      xBtn.setAttribute("aria-label", "Close the example and go back to MNKY");
-      xBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>';
-      var backBtn = document.createElement("button");
-      backBtn.type = "button"; backBtn.className = "mkm-leave";
-      backBtn.innerHTML = 'Back to MNKY <span aria-hidden="true">&darr;</span>';
-      stage.appendChild(xBtn);
-      stage.appendChild(backBtn);
+      var opener = card && card.querySelector(".mkm-open");
+      if (!card || !stagewrap || !phone || !scr || !sect) { return; }
 
       var mq = window.matchMedia("(max-width: 759.98px)");
-      var on = false, tween = null, ticking = false, proxy = { v: 0 };
-      var GROW0 = .25, GROW1 = .70, FADE = .30;
       var view = null, ifr = null, mounted = false, barless = false;
-      /* medidas del reposo; las rellenan measureScene() / measureDesk() */
-      var TW = 1, TH = 1, AR = RATIO, sw0 = 1, padX0 = 10, padY0 = 10, sth0 = 38, ifH = 780;
-      var badgeT = null, wasFull = false;
-      var locked = false, lockY = 0, armed = true, lastY = -1, restT = null;
+      var sw0 = 1, padX0 = 10, padY0 = 10, sth0 = 38, AR = RATIO, ifH = 780;
 
-      /* ---- anclaje: al 100 % del rail la pagina se queda quieta ----
-         Se fija el scroll justo en el final del rail (la escena entera en
-         pantalla), se bloquea el documento y el dedo solo mueve la demo. Dentro
-         del iframe, overscroll-behavior: none corta la cadena hacia la pagina.
-         iOS no siempre respeta overflow: hidden en <html>, asi que ademas se
-         cancela el touchmove que llegue al documento (los toques dentro del
-         iframe nunca llegan aqui, asi que la demo sigue desplazandose).
-         Lecciones del iPhone (12/09): (1) un scrollTo en plena inercia iOS lo
-         ignora, asi que solo se ancla cuando el scroll esta EN REPOSO; (2) se
-         ancla solo BAJANDO y tras haber pasado por menos del 100 % ("armed"):
-         al volver desde abajo la escena se atraviesa sin agarrar a nadie, y
-         quien quiera entrar toca el telefono. */
-      function tail() { return Math.round(0.6 * stage.offsetHeight); }
-      function railEnd() {
-        var top = card.getBoundingClientRect().top + window.pageYOffset;
-        return Math.round(top + (card.offsetHeight - stage.offsetHeight - tail()) - 64);
-      }
-      function frameLock(onOff) {
-        try { var d = ifr && ifr.contentDocument; if (d) { d.documentElement.classList.toggle("mkm-lock", onOff); } } catch (err) {}
-      }
-      function stopTouch(e) { if (locked) { e.preventDefault(); } }
-      /* si algo mueve la pagina anclada (rebote de iOS, barra de direcciones que
-         cambia de alto), se vuelve al punto exacto */
-      function resnap() { if (locked && Math.abs(window.pageYOffset - lockY) > 1) { window.scrollTo(0, lockY); } }
-      function lock() {
-        if (locked || !on) { return; }
-        locked = true; armed = false;
-        clearTimeout(restT);
-        lockY = railEnd();
-        window.scrollTo(0, lockY);
-        root.classList.add("mkm-locked");
-        badge.textContent = "Example page · scroll it · × to leave";
-        card.classList.add("mkm-showbadge"); clearTimeout(badgeT);
-        badgeT = setTimeout(function () { card.classList.remove("mkm-showbadge"); }, 3000);
-        frameLock(true);
-        document.addEventListener("touchmove", stopTouch, { passive: false });
-        window.addEventListener("scroll", resnap, { passive: true });
-      }
-      function unlock(leave) {
-        if (!locked) { return; }
-        locked = false;
-        root.classList.remove("mkm-locked");
-        frameLock(false);
-        document.removeEventListener("touchmove", stopTouch);
-        window.removeEventListener("scroll", resnap);
-        if (leave) {
-          /* la pagina sigue justo despues de la escena: cola y hueco pegajoso
-             incluidos, para no volver a caer en ella */
-          var to = lockY + tail() + stage.offsetHeight;
-          try { window.scrollTo({ top: to, behavior: "smooth" }); } catch (err) { window.scrollTo(0, to); }
-        }
-      }
-      xBtn.addEventListener("click", function () { unlock(true); });
-      backBtn.addEventListener("click", function () { unlock(true); });
-      document.addEventListener("keydown", function (e) { if (locked && (e.key === "Escape" || e.key === "Esc")) { unlock(true); } });
-      /* a pantalla completa sin anclar, un toque en el telefono entra en la demo */
-      stagewrap.addEventListener("click", function () { if (on && wasFull && !locked) { lock(); } });
-
-      /* el anclaje se decide con el progreso REAL del scroll y en reposo */
-      function armCheck() {
-        var y = window.pageYOffset, down = y >= lastY; lastY = y;
-        var raw = progress();
-        if (raw < .999) { armed = true; }
-        clearTimeout(restT);
-        /* solo dentro de la cola: si el dedo ya paso de largo y la escena se fue
-           de la pantalla, no se agarra a nadie desde atras */
-        function inTail() { return window.pageYOffset - railEnd() <= tail(); }
-        if (raw >= .999 && !locked && armed && down && inTail()) {
-          restT = setTimeout(function () { if (on && !locked && armed && progress() >= .999 && inTail()) { lock(); } }, 140);
-        }
-      }
-
-      function ease(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(2 - 2 * x, 2) / 2; }
       function px(n) { return (Math.round(n * 100) / 100) + "px"; }
-      /* la escena solo tiene sentido si la pantalla del visitante tiene forma de
-         telefono: en una ventana ancha y baja (tablet pequena, ventana a medias)
-         se queda la tarjeta normal con el telefono y su demo dentro */
-      function sceneOK() {
-        var vw = document.documentElement.clientWidth;
-        return mq.matches && vw > 0 && (window.innerHeight - 64) / vw >= 1.45;
-      }
       function setv(k, v) { card.style.setProperty(k, v); }
 
       /* ---- el iframe no existe hasta que #get esta a menos de una pantalla ---- */
@@ -2851,8 +2614,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       /* un telefono no ensena barra de scroll: se apaga desde dentro del propio
-         documento (mismo origen) para que el iframe mida 390 px logicos exactos.
-         Si algun dia fuera de otro origen, se recorta ensanchandolo (barless). */
+         documento (mismo origen) para que el iframe mida 390 px logicos exactos */
       function hideBars() {
         try {
           var d = ifr.contentDocument;
@@ -2860,7 +2622,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (!d.__mkmNoBar) {
             d.__mkmNoBar = true;
             var s = d.createElement("style");
-            s.textContent = "html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}html.mkm-lock{overscroll-behavior:none}";
+            s.textContent = "html{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}";
             (d.head || d.documentElement).appendChild(s);
           }
           barless = true;
@@ -2868,12 +2630,9 @@ document.addEventListener("DOMContentLoaded", function () {
         refresh();
       }
 
-      /* ---- una sola funcion pinta el aparato, en la escena y fuera de ella ----
-         sw = ancho de PANTALLA en px; f = 1 con marco, 0 sin marco.
-         El alto del area de la demo es siempre sw*AR, asi que el iframe (390 x
-         390*AR escalado sw/390) encaja exacto sin cambiar de maquetacion. */
-      function apply(sw, f) {
-        var m = (sw / sw0) * f;
+      /* ---- pinta el aparato: sw = ancho de PANTALLA en px ---- */
+      function apply(sw) {
+        var m = sw / sw0;
         var padX = padX0 * m, padY = padY0 * m, sth = sth0 * m;
         var screenH = sw * AR + sth;
         var W = sw + 2 * padX, H = screenH + 2 * padY;
@@ -2881,23 +2640,23 @@ document.addEventListener("DOMContentLoaded", function () {
         phone.style.height = px(H);
         setv("--mkm-padx", px(padX));
         setv("--mkm-pady", px(padY));
-        setv("--mkm-rad", px(W * 0.123 * f));
-        setv("--mkm-srad", px(sw * 0.095 * f));
+        setv("--mkm-rad", px(W * 0.123));
+        setv("--mkm-srad", px(sw * 0.095));
         setv("--mkm-sth", px(sth));
         setv("--mkm-stf", px(sth * 0.33));
         setv("--mkm-stp", px(sw * 0.04));
         setv("--mkm-isw", px(sw * 0.24));
         setv("--mkm-ish", px(sth * 0.7));
         setv("--mkm-ist", px(sth * 0.15));
-        setv("--mkm-btn", px(W * 0.0085 * f));
+        setv("--mkm-btn", px(W * 0.0085));
         setv("--mkm-b1", px(H * 0.027));
         setv("--mkm-bg1", px(H * 0.052));
         setv("--mkm-bg2", px(H * 0.098));
         setv("--mkm-b3", px(H * 0.065));
         setv("--mkm-hiw", px(sw * 0.33));
-        setv("--mkm-hih", px(Math.max(2, screenH * 0.0065) * f));
+        setv("--mkm-hih", px(Math.max(2, screenH * 0.0065)));
         setv("--mkm-hib", px(Math.max(3, screenH * 0.009)));
-        setv("--mkm-f", f.toFixed(4));
+        setv("--mkm-f", "1");
         if (ifr) { ifr.style.transform = "scale(" + (sw / PHONE).toFixed(5) + ")"; }
       }
 
@@ -2907,8 +2666,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ifr.style.height = ifH + "px";
       }
 
-      /* ---- reposo fuera de la escena: manda el ancho que da el CSS ---- */
-      function measureDesk() {
+      /* ---- manda el ancho que da el CSS ---- */
+      function measure() {
         phone.style.width = ""; phone.style.height = "";
         /* el ancho se lee del estilo calculado y no del rect: la entrada de
            pagina deja un rotateX con perspectiva y el rect vendria encogido */
@@ -2921,151 +2680,22 @@ document.addEventListener("DOMContentLoaded", function () {
         var screenH = H - 2 * padY0;
         sth0 = screenH * 0.047;
         AR = (screenH - sth0) / sw0;
-        TW = sw0; TH = screenH;
         ifH = Math.round(PHONE * AR);
         sizeFrame();
         return true;
       }
 
-      /* ---- reposo dentro de la escena ----
-         El objetivo del final es TW x TH (el hueco pegajoso), asi que el area de
-         la demo nace ya con esa proporcion; la del telefono (9/19.5 exactos) se
-         consigue con el marco de arriba y abajo, que es mas grueso que el de los
-         lados igual que en un telefono con menton. Al crecer, el marco se va. */
-      function measureScene() {
-        /* el fondo y el lienzo del telefono salen a sangre con estos dos huecos */
-        var r = stage.getBoundingClientRect();
-        var vw = document.documentElement.clientWidth;
-        if (!r.width || !vw) { return false; }
-        setv("--mkm-gap", px(r.left));
-        setv("--mkm-gapr", px(vw - r.right));
-        TW = vw; TH = Math.round(r.height);
-        if (!TW || !TH) { return false; }
-        AR = TH / TW;
-        var top = 20 + copy.getBoundingClientRect().height + 18;
-        var bot = (cap ? cap.getBoundingClientRect().height : 0) + 18;
-        var room = TH - top - bot;
-        var W0 = Math.min(TW * 0.58, room / RATIO, 300);
-        if (W0 < 150) { W0 = 150; }
-        padX0 = Math.max(4, Math.round(W0 * 0.026));
-        sw0 = W0 - 2 * padX0;
-        sth0 = sw0 * AR * 0.0493;                 /* 4,7 % del alto de pantalla */
-        padY0 = (W0 * RATIO - (sw0 * AR + sth0)) / 2;
-        /* el marco de arriba y abajo no puede ser tan grueso que, al crecer con
-           el telefono, lo haga mas alto que el hueco: ese era el techo que se
-           salia del viewport a mitad de escena. Aqui se acota. */
-        var swMax = sw0 + (TW - sw0) * (1 - FADE);
-        var padYmax = (AR * (TW / swMax - 1) * sw0 - sth0) / 2;
-        if (padY0 > padYmax) { padY0 = padYmax; }
-        if (padY0 < padX0) { padY0 = padX0; }     /* viewport muy alto: se acepta la deriva */
-        var H0 = sw0 * AR + sth0 + 2 * padY0;
-        ifH = Math.round(PHONE * AR);
-        sizeFrame();
-        setv("--mkm-ty", px((top + (TH - bot)) / 2 - TH / 2));
-        return H0 > 0;
-      }
-
-      function render(t) {
-        var e = t <= GROW0 ? 0 : (t >= GROW1 ? 1 : ease((t - GROW0) / (GROW1 - GROW0)));
-        var f = e <= 1 - FADE ? 1 : Math.max(0, (1 - e) / FADE);
-        apply(sw0 + (TW - sw0) * e, f);
-        setv("--mkm-e", e.toFixed(4));
-        setv("--mkm-copy", Math.max(0, 1 - e * 2.5).toFixed(3));
-        var full = e > .995;
-        if (full !== wasFull) {
-          wasFull = full;
-          root.classList.toggle("mkm-full", full);
-          card.classList.toggle("mkm-showbadge", full);
-          clearTimeout(badgeT);
-          if (full) { badgeT = setTimeout(function () { card.classList.remove("mkm-showbadge"); }, 3000); }
-        }
-        if (!locked) { badge.textContent = full ? "Tap the page to try it" : "Example page · scroll it · × to leave"; }
-        if (locked && progress() < .999) { unlock(false); }
-      }
-
-      function refresh() {
-        if (on) { if (measureScene()) { render(progress()); } }
-        else { if (measureDesk()) { apply(sw0, 1); } }
-      }
-
-      function progress() {
-        var r = card.getBoundingClientRect();
-        var travel = r.height - stage.getBoundingClientRect().height - tail();
-        if (travel <= 0) { return 0; }
-        var p = (64 - r.top) / travel;
-        return p < 0 ? 0 : (p > 1 ? 1 : p);
-      }
-
-      function onScroll() {
-        if (ticking) { return; }
-        ticking = true;
-        requestAnimationFrame(function () { ticking = false; if (on) { render(progress()); } });
-      }
-
-      function enable() {
-        if (on) { return; }
-        on = true;
-        root.classList.add("mkm-scene");
-        measureScene();
-        if (GS) {
-          /* scrub: lo gobierna el scroll de punta a punta, con algo de inercia
-             para que el crecimiento se sienta continuo y no a saltos */
-          tween = gsap.to(proxy, {
-            v: 1, ease: "none", overwrite: true,
-            onUpdate: function () { render(proxy.v); },
-            scrollTrigger: {
-              trigger: card, start: "top 64px",
-              end: function () { return "+=" + Math.max(1, card.offsetHeight - stage.offsetHeight - tail()); },
-              scrub: .8, invalidateOnRefresh: true,
-              onRefreshInit: measureScene, onRefresh: measureScene
-            }
-          });
-        } else {
-          window.addEventListener("scroll", onScroll, { passive: true });
-        }
-        window.addEventListener("scroll", armCheck, { passive: true });
-        lastY = window.pageYOffset; armed = progress() < .999;
-        render(progress());
-      }
-
-      function disable() {
-        if (!on) { return; }
-        on = false;
-        if (tween) {
-          if (tween.scrollTrigger) { tween.scrollTrigger.kill(); }
-          tween.kill(); tween = null;
-        }
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("scroll", armCheck);
-        clearTimeout(badgeT); clearTimeout(restT);
-        unlock(false);
-        wasFull = false;
-        root.classList.remove("mkm-scene");
-        root.classList.remove("mkm-full");
-        card.classList.remove("mkm-showbadge");
-        setv("--mkm-e", "0");
-        setv("--mkm-copy", "1");
-        setv("--mkm-ty", "0px");
-        setv("--mkm-gap", "0px");
-        setv("--mkm-gapr", "0px");
-        if (measureDesk()) { apply(sw0, 1); }
-      }
+      function refresh() { if (measure()) { apply(sw0); } }
 
       var rt = null;
-      function relayout() {
-        clearTimeout(rt);
-        rt = setTimeout(function () {
-          if (sceneOK()) { enable(); } else { disable(); }
-          if (on) {
-            measureScene();
-            if (GS && window.ScrollTrigger) { ScrollTrigger.refresh(); } else { render(progress()); }
-          }
-        }, 160);
-      }
+      function relayout() { clearTimeout(rt); rt = setTimeout(refresh, 160); }
 
-      if (sceneOK()) { enable(); } else { refresh(); }
-      if (mq.addEventListener) { mq.addEventListener("change", relayout); }
-      else if (mq.addListener) { mq.addListener(relayout); }
+      /* en movil la demo no recibe el dedo (CSS): tocar el telefono abre el visor */
+      stagewrap.addEventListener("click", function () {
+        if (mq.matches && opener) { opener.click(); }
+      });
+
+      refresh();
       window.addEventListener("resize", relayout);
       window.addEventListener("orientationchange", relayout);
       window.addEventListener("load", refresh);
@@ -3116,7 +2746,14 @@ document.addEventListener("DOMContentLoaded", function () {
     var fab = document.getElementById("mkdFab");          /* la X flotante del modo telefono */
     var newTabs = dlg.querySelectorAll("[data-newtab]");
     var segBtns = dlg.querySelectorAll("[data-mode]");
-    var cards = root.querySelectorAll(".mkd-card");
+    var cards = document.querySelectorAll("#demos .mkd-card, #getGrid .mkm-open");
+    /* la pieza que se transforma en el visor: la miniatura de la tarjeta o, para
+       "Fast on a phone", el propio telefono (data-vt) */
+    function vtSource(card) {
+      if (!card) return null;
+      var sel = card.getAttribute("data-vt");
+      return sel ? document.querySelector(sel) : card.querySelector(".mkd-media");
+    }
 
     var reduce = { matches: RM };
     var narrow = window.matchMedia("(max-width: 759px)");
@@ -3313,7 +2950,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function openViewer(card) {
       if (busy || dlg.open) return;
-      var media = card.querySelector(".mkd-media");
+      var media = vtSource(card);
       if (!canVT() || !media) { dlg.classList.remove("is-vt"); openNow(card); return; }
       busy = true;
       dlg.classList.add("is-vt");
@@ -3337,7 +2974,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeViewer() {
       if (!dlg.open || busy) return;
       var card = current;
-      var media = card ? card.querySelector(".mkd-media") : null;
+      var media = vtSource(card);
       if (!canVT() || !media) { dlg.close(); document.documentElement.classList.remove("mkd-locked"); afterClose(card); return; }
       busy = true;
       device.style.viewTransitionName = NAME;
@@ -3426,8 +3063,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* ---- #get: el telefono entra desde abajo y se endereza; el bento se enciende por columnas ---- */
-    /* la escena sticky del telefono en movil manda: si esta activa, esta entrada no se monta */
-    var phone = document.documentElement.classList.contains("mkm-scene") ? null : document.querySelector("#getGrid .mkm-stagewrap");
+    var phone = document.querySelector("#getGrid .mkm-stagewrap");
     if (phone) {
       gsap.fromTo(phone, { yPercent: 7, rotateX: 14 }, { yPercent: 0, rotateX: 0, ease: "none", transformOrigin: "50% 100%",
         scrollTrigger: { trigger: phone, start: "top 98%", end: "top 30%", scrub: .9 } });

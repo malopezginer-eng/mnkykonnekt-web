@@ -13,12 +13,11 @@ y `2026-09-12-web-tercera-vuelta.md`; auditoría en `lab\b\NOTAS.md` del laborat
 que es producción); el laboratorio `lab` queda como archivo y ya no se copia. Si hiciera falta volver a copiar desde el lab:
 `sed` de `../assets/img/` → `img/`, `../assets/fonts/` → `fonts/`, `../pieces/posters/` → `img/posters/`, `../demos/` → `demos/`.
 
-«Fast on a phone» en móvil (12/09, sesión dedicada, segunda vuelta tras el iPhone de Miguel): al llegar al 100 % del rail
-**bajando y con el scroll en reposo** la página se ancla (`html.mkm-locked`) y solo se mueve la demo; se sale con la ×, la barra
-«Back to MNKY» o Escape, que saltan la escena entera. El rail lleva una cola de 0,6 pantallas en la que la escena sigue completa
-(la inercia que pasa de largo no se lleva la ×); subiendo desde abajo nunca se ancla y la demo no recibe el dedo: se entra tocando
-el teléfono. Lecciones de iOS: `overflow: hidden` no frena el dedo y un `scrollTo` en plena inercia se ignora. Probado en Playwright
-(390×844, con y sin `reduce`); el gesto real se comprueba en iPhone.
+«Fast on a phone» en móvil (12/09, tres vueltas en una noche): las dos primeras (escena que crecía con el scroll y bloqueaba la
+página) las tumbó el iPhone de Miguel (iOS ignora `scrollTo` en plena inercia y `overflow: hidden` no frena el dedo: × ausente,
+página «pillada»). **Diseño final:** el teléfono se queda en su tarjeta, grande, con la demo real corriendo dentro pero sin recibir el
+dedo; tocarlo o pulsar «Try it on your phone» (`.mkm-open`, un enlace a la demo sin JS) abre el **visor de demos** (`<dialog>` con ×,
+`data-vt` hace que el propio teléfono sea el origen de la transición). Sin escena, sin scroll secuestrado: 422 líneas menos.
 
 Desde el 2026-09-09 la página se **escribe a mano** en `index.html` (CSS y JS incrustados, GSAP por CDN con `defer`,
 completa sin JavaScript y con `prefers-reduced-motion` respetado). Ya no se genera con el motor de previews:
